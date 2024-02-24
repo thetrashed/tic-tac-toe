@@ -17,8 +17,6 @@ class Player:
         index1 = int(mouse_pos[0] / block_width)
         index2 = int(mouse_pos[1] / block_height)
 
-        print(index1, index2)
-
         if (
             self.__ttcBoard.board[index1, index2] == 0
             and self.__ttcBoard.board[index1, index2] != self.__symbol

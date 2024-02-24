@@ -5,8 +5,10 @@ import pygame as pg
 class TTCBoard:
     def __init__(self):
         self.board = np.zeros((3, 3), dtype=int)
+        self.ended = False
 
     def drawBoard(self, screen, swidth, sheight):
+        self.ended = self.checkGameEnd()
         block_height = sheight / 3
         block_width = swidth / 3
 
@@ -34,6 +36,27 @@ class TTCBoard:
             pg.draw.line(screen, "gray", (cx - r, cy - r), (cx + r, cy + r), 1)
         else:
             pg.draw.circle(screen, "gray", (cx, cy), r, 1)
+
+    def checkGameEnd(self):
+        if (
+            abs(sum(self.board[0])) == 3
+            or abs(sum(self.board[1])) == 3
+            or abs(sum(self.board[2])) == 3
+        ):
+            return True
+        elif (
+            abs(sum(self.board[:][0])) == 3
+            or abs(sum(self.board[:][1])) == 3
+            or abs(sum(self.board[:][2])) == 3
+        ):
+            return True
+        elif (
+            abs(self.board[0, 0] + self.board[1, 1] + self.board[2, 2]) == 3
+            or abs(self.board[0, 2] + self.board[1, 1] + self.board[2, 0]) == 3
+        ):
+            return True
+
+        return False
 
     def __str__(self):
         return str(self.board)
