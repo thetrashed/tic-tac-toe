@@ -10,7 +10,7 @@ class Player:
     def getSymbol(self):
         return self.__symbol
 
-    def updateBoard(self, mouse_pos, swidth, sheight):
+    def move(self, mouse_pos, swidth, sheight):
         block_width = swidth / 3
         block_height = sheight / 3
 

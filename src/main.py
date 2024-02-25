@@ -2,19 +2,20 @@ import pygame as pg
 import random
 
 from board import TTCBoard
-from bot import botMove
+import bot
 import player
 
 
 def main():
     b = TTCBoard()
-    human = player.Player(random.choice((-1, 1)), b)
-    computer = player.Player(-1 if human.getSymbol() == 1 else 1, b)
+    player1 = player.Player(random.choice((-1, 1)), b)
+    # player1 = bot.RandomBot(b, random.choice((-1, 1)))
+    player2 = bot.OneLayerBot(b, -1 if player1.getSymbol() == 1 else 1)
 
-    if human.getSymbol() == 1:
-        player_turn = True
+    if player1.getSymbol() == 1:
+        player1_turn = True
     else:
-        player_turn = False
+        player1_turn = False
 
     pg.init()
     screen = pg.display.set_mode((800, 600), pg.DOUBLEBUF | pg.RESIZABLE)
@@ -26,16 +27,18 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
-            if player_turn:
+            if player1_turn:
                 if event.type == pg.MOUSEBUTTONUP:
                     mouse_pos = pg.mouse.get_pos()
-                    human.updateBoard(mouse_pos, window_size[0], window_size[1])
-                    player_turn = not player_turn
+                    player1.move(mouse_pos, window_size[0], window_size[1])
+                    player1_turn = not player1_turn
+                # player1.move()
+                # player1_turn = not player1_turn
             else:
-                botMove(b, computer)
-                player_turn = not player_turn
+                player2.move()
+                player1_turn = not player1_turn
 
-        if b.checkGameEnd():
+        if b.hasWinner():
             running = False
 
         keys = pg.key.get_pressed()

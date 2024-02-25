@@ -1,5 +1,6 @@
 import numpy as np
 import pygame as pg
+import copy
 
 
 class TTCBoard:
@@ -8,7 +9,6 @@ class TTCBoard:
         self.ended = False
 
     def drawBoard(self, screen, swidth, sheight):
-        self.ended = self.checkGameEnd()
         block_height = sheight / 3
         block_width = swidth / 3
 
@@ -31,13 +31,13 @@ class TTCBoard:
                 pg.draw.rect(screen, "gray", rect, 1)
 
     def drawCrossCirc(self, index1, index2, screen, cx, cy, r):
-        if self.board[index1][index2] == 1:
+        if self.board[index1, index2] == 1:
             pg.draw.line(screen, "gray", (cx - r, cy + r), (cx + r, cy - r), 1)
             pg.draw.line(screen, "gray", (cx - r, cy - r), (cx + r, cy + r), 1)
         else:
             pg.draw.circle(screen, "gray", (cx, cy), r, 1)
 
-    def checkGameEnd(self):
+    def hasWinner(self):
         if (
             abs(sum(self.board[0])) == 3
             or abs(sum(self.board[1])) == 3
@@ -45,9 +45,9 @@ class TTCBoard:
         ):
             return True
         elif (
-            abs(sum(self.board[:][0])) == 3
-            or abs(sum(self.board[:][1])) == 3
-            or abs(sum(self.board[:][2])) == 3
+            abs(sum(self.board[:, 0])) == 3
+            or abs(sum(self.board[:, 1])) == 3
+            or abs(sum(self.board[:, 2])) == 3
         ):
             return True
         elif (
@@ -57,6 +57,11 @@ class TTCBoard:
             return True
 
         return False
+
+    def __deepcopy__(self, memodict={}):
+        dp = TTCBoard()
+        dp.board = copy.deepcopy(self.board)
+        return dp
 
     def __str__(self):
         return str(self.board)
