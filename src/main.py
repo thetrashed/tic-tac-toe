@@ -10,7 +10,7 @@ def main():
     b = TTCBoard()
     player1 = player.Player(random.choice((-1, 1)), b)
     # player1 = bot.RandomBot(b, random.choice((-1, 1)))
-    player2 = bot.OneLayerBot(b, -1 if player1.getSymbol() == 1 else 1)
+    player2 = bot.TwoLayerBot(b, -1 if player1.getSymbol() == 1 else 1)
 
     if player1.getSymbol() == 1:
         player1_turn = True
