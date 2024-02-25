@@ -8,18 +8,23 @@ The interface for the game has been created using [pygame](https://www.pygame.or
 
 ## Usage
 Clone the repo locally:
+
 	git clone https://github.com/thetrashed/tic-tac-toe.git
 
 Create a virtual environement (recommended) in the clone repo, for example using `virtualenv`:
+
 	virtualenv ./.venv
 	
 Activate the virtual environment by doing the following (for Linux):
+
 	source ./.venv/bin/activate
 	
 Install the required libraries:
+
 	pip install -r requirements.txt
 	
 Run the program:
+
 	python src/main.py
 
 ## References
