@@ -75,7 +75,7 @@ class TTCBoard:
         return 0
 
     def boardFull(self):
-        return True if np.argwhere(self.board == 0).size == 0 else False
+        return True if not np.argwhere(self.board == 0).size else False
 
     def __deepcopy__(self, memodict={}):
         dp = TTCBoard()

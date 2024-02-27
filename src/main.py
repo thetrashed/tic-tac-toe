@@ -6,6 +6,28 @@ import bot
 import player
 
 
+def openingMenu(screen, window_size):
+    font = pg.font.Font(None, 50)
+    text = font.render("Welcome to Tic-Tac-Toe", True, "gray")
+
+    text_rect = text.get_rect(center=(window_size[0] / 2, window_size[1] / 3))
+    screen.blit(text, text_rect)
+
+
+def closingMenu(screen, window_size, winner_symbol, player):
+    if player.getSymbol() == winner_symbol:
+        txt = "You Won!"
+    elif winner_symbol == 0:
+        txt = "It Was a Draw"
+    else:
+        txt = "You Lost :("
+
+    font = pg.font.Font(None, 50)
+    text = font.render(txt, True, "gray")
+    text_rect = text.get_rect(center=(window_size[0] / 2, window_size[1] / 2))
+    screen.blit(text, text_rect)
+
+
 def main():
     b = TTCBoard()
     player1 = player.Player(random.choice((-1, 1)), b)
@@ -18,6 +40,8 @@ def main():
         player1_turn = False
 
     pg.init()
+    opening_menu_enabled = False
+    closing_menu_enabled = False
     screen = pg.display.set_mode((800, 600), pg.DOUBLEBUF | pg.RESIZABLE)
     clock = pg.time.Clock()
 
@@ -27,26 +51,31 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
-            if player1_turn:
+            if player1_turn and not opening_menu_enabled and not closing_menu_enabled:
                 if event.type == pg.MOUSEBUTTONUP:
                     mouse_pos = pg.mouse.get_pos()
                     player1.move(mouse_pos, window_size[0], window_size[1])
                     player1_turn = not player1_turn
-                # player1.move()
-                # player1_turn = not player1_turn
-            else:
+                    # player1.move()
+                    # player1_turn = not player1_turn
+            elif not opening_menu_enabled and not closing_menu_enabled:
                 player2.move()
                 player1_turn = not player1_turn
 
-        if b.hasWinner() != 0 or b.boardFull():
-            running = False
+        if (winner := b.hasWinner()) != 0 or b.boardFull():
+            closing_menu_enabled = True
 
         keys = pg.key.get_pressed()
         if keys[pg.K_q]:
             running = False
 
         screen.fill("black")
-        b.drawBoard(screen, window_size[0], window_size[1])
+        if opening_menu_enabled:
+            openingMenu(screen, window_size)
+        elif closing_menu_enabled:
+            closingMenu(screen, window_size, winner, player1)
+        else:
+            b.drawBoard(screen, window_size[0], window_size[1])
 
         pg.display.flip()
 
