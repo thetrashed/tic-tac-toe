@@ -29,7 +29,7 @@ Run the program:
 
 ## References
 These resources helped me along the way:
-- https://thesharperdev.com/coding-the-perfect-tic-tac-toe-bot/
+- Tutorial: https://thesharperdev.com/coding-the-perfect-tic-tac-toe-bot/
 - Finding the indices of a certain value in a 2d array: https://stackoverflow.com/questions/27175400/
 - Mouse detection in pygame: https://stackoverflow.com/questions/10990137/
 - Making a grid in pygame: https://stackoverflow.com/questions/33963361/

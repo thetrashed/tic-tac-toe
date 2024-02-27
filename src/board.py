@@ -39,24 +39,43 @@ class TTCBoard:
 
     def hasWinner(self):
         if (
-            abs(sum(self.board[0])) == 3
-            or abs(sum(self.board[1])) == 3
-            or abs(sum(self.board[2])) == 3
+            sum(self.board[0]) == 3
+            or sum(self.board[1]) == 3
+            or sum(self.board[2]) == 3
         ):
-            return True
+            return 1
         elif (
-            abs(sum(self.board[:, 0])) == 3
-            or abs(sum(self.board[:, 1])) == 3
-            or abs(sum(self.board[:, 2])) == 3
+            sum(self.board[0]) == -3
+            or sum(self.board[1]) == -3
+            or sum(self.board[2]) == -3
         ):
-            return True
-        elif (
-            abs(self.board[0, 0] + self.board[1, 1] + self.board[2, 2]) == 3
-            or abs(self.board[0, 2] + self.board[1, 1] + self.board[2, 0]) == 3
-        ):
-            return True
+            return -1
 
-        return False
+        elif (
+            sum(self.board[:, 0]) == 3
+            or sum(self.board[:, 1]) == 3
+            or sum(self.board[:, 2]) == 3
+        ):
+            return 1
+        elif (
+            sum(self.board[:, 0]) == -3
+            or sum(self.board[:, 1]) == -3
+            or sum(self.board[:, 2]) == -3
+        ):
+            return -1
+        elif (self.board[0, 0] + self.board[1, 1] + self.board[2, 2]) == 3 or (
+            self.board[0, 2] + self.board[1, 1] + self.board[2, 0]
+        ) == 3:
+            return 1
+        elif (self.board[0, 0] + self.board[1, 1] + self.board[2, 2]) == -3 or (
+            self.board[0, 2] + self.board[1, 1] + self.board[2, 0]
+        ) == -3:
+            return -1
+
+        return 0
+
+    def boardFull(self):
+        return True if np.argwhere(self.board == 0).size == 0 else False
 
     def __deepcopy__(self, memodict={}):
         dp = TTCBoard()

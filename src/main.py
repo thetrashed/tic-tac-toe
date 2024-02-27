@@ -38,7 +38,7 @@ def main():
                 player2.move()
                 player1_turn = not player1_turn
 
-        if b.hasWinner():
+        if b.hasWinner() != 0 or b.boardFull():
             running = False
 
         keys = pg.key.get_pressed()
