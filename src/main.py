@@ -8,10 +8,18 @@ import player
 
 def openingMenu(screen, window_size):
     font = pg.font.Font(None, 50)
-    text = font.render("Welcome to Tic-Tac-Toe", True, "gray")
+    welcome_text = font.render("Welcome to Tic-Tac-Toe", True, "gray")
 
-    text_rect = text.get_rect(center=(window_size[0] / 2, window_size[1] / 3))
-    screen.blit(text, text_rect)
+    opening_text_rect = welcome_text.get_rect(
+        center=(window_size[0] / 2, window_size[1] / 2 - 60)
+    )
+    screen.blit(welcome_text, opening_text_rect)
+
+    instructions_text = font.render('Press "Space" to Play', True, "gray")
+    instruction_text_rect = instructions_text.get_rect(
+        center=(window_size[0] / 2, window_size[1] / 2 + 60)
+    )
+    screen.blit(instructions_text, instruction_text_rect)
 
 
 def closingMenu(screen, window_size, winner_symbol, player):
@@ -23,9 +31,9 @@ def closingMenu(screen, window_size, winner_symbol, player):
         txt = "You Lost :("
 
     font = pg.font.Font(None, 50)
-    text = font.render(txt, True, "gray")
-    text_rect = text.get_rect(center=(window_size[0] / 2, window_size[1] / 2))
-    screen.blit(text, text_rect)
+    closing_text = font.render(txt, True, "gray")
+    text_rect = closing_text.get_rect(center=(window_size[0] / 2, window_size[1] / 2))
+    screen.blit(closing_text, text_rect)
 
 
 def main():
@@ -40,7 +48,7 @@ def main():
         player1_turn = False
 
     pg.init()
-    opening_menu_enabled = False
+    opening_menu_enabled = True
     closing_menu_enabled = False
     screen = pg.display.set_mode((800, 600), pg.DOUBLEBUF | pg.RESIZABLE)
     clock = pg.time.Clock()
@@ -68,6 +76,8 @@ def main():
         keys = pg.key.get_pressed()
         if keys[pg.K_q]:
             running = False
+        elif keys[pg.K_SPACE] and opening_menu_enabled:
+            opening_menu_enabled = False
 
         screen.fill("black")
         if opening_menu_enabled:
