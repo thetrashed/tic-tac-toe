@@ -35,3 +35,4 @@ These resources helped me along the way:
 - Mouse detection in pygame: https://stackoverflow.com/questions/10990137/
 - Making a grid in pygame: https://stackoverflow.com/questions/33963361/
 - Pygame documentation: https://www.pygame.org/docs/
+- Minimax algorithm: https://thesharperdev.com/implementing-minimax-tree-search/
