@@ -1,8 +1,9 @@
 # Tic-Tac-Toe Bot
-Assignment for an Artificial Intelligence course. Comprises of 3 bots:
+Assignment for an Artificial Intelligence course. Comprises of 4 bots:
 - A simple bot that plays random moves every single time.
 - A slightly more complicated bot that checks if there is a winning move and plays it; otherwise, it plays as random move.
 - An even more complicated bot that check if there is a winning move, then checks if the other player has a winning move (and blocks if there exists such a move), or plays a random move if the other two conditions are not satisfied.
+- A bot which is uses the minimax algorithm to decide what the best move for each turn is.
 
 The interface for the game has been created using [pygame](https://www.pygame.org/docs/).
 

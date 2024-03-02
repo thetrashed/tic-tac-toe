@@ -7,6 +7,7 @@ class TTCBoard:
     def __init__(self):
         self.board = np.zeros((3, 3), dtype=int)
         self.ended = False
+        self.moves = []
 
     def drawBoard(self, screen, swidth, sheight):
         block_height = sheight / 3
@@ -74,8 +75,14 @@ class TTCBoard:
 
         return 0
 
+    def reset(self):
+        self.board = np.zeros((3, 3))
+
     def boardFull(self):
         return True if not np.argwhere(self.board == 0).size else False
+
+    def getLastMove(self):
+        return self.moves[-1]
 
     def __deepcopy__(self, memodict={}):
         dp = TTCBoard()
