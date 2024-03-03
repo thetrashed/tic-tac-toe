@@ -15,7 +15,9 @@ def openingMenu(screen, window_size):
     )
     screen.blit(welcome_text, opening_text_rect)
 
-    instructions_text = font.render('Press "Space" to Play', True, "gray")
+    instructions_text = font.render(
+        'Select Difficulty Level By Pressing "1", "2", "3", or "4"', True, "gray"
+    )
     instruction_text_rect = instructions_text.get_rect(
         center=(window_size[0] / 2, window_size[1] / 2 + 60)
     )
@@ -50,7 +52,8 @@ def main():
     b = TTCBoard()
     player1 = player.Player(random.choice((-1, 1)), b)
     # player1 = bot.RandomBot(b, random.choice((-1, 1)))
-    player2 = bot.MiniMaxBot(b, -1 if player1.getSymbol() == 1 else 1)
+    player2 = None
+    # bot.MiniMaxBot(b, -1 if player1.getSymbol() == 1 else 1)
 
     if player1.getSymbol() == 1:
         player1_turn = True
@@ -94,8 +97,20 @@ def main():
         keys = pg.key.get_pressed()
         if keys[pg.K_q]:
             running = False
-        elif keys[pg.K_SPACE] and opening_menu_enabled:
-            opening_menu_enabled = False
+        elif opening_menu_enabled:
+            player1_symbol = player1.getSymbol()
+            if keys[pg.K_1]:
+                player2 = bot.RandomBot(b, 1 if player1_symbol == -1 else -1)
+                opening_menu_enabled = False
+            elif keys[pg.K_2]:
+                player2 = bot.OneLayerBot(b, 1 if player1_symbol == -1 else -1)
+                opening_menu_enabled = False
+            elif keys[pg.K_3]:
+                player2 = bot.TwoLayerBot(b, 1 if player1_symbol == -1 else -1)
+                opening_menu_enabled = False
+            elif keys[pg.K_4]:
+                player2 = bot.MiniMaxBot(b, 1 if player1_symbol == -1 else -1)
+                opening_menu_enabled = False
         elif keys[pg.K_r] and closing_menu_enabled:
             b.reset()
             player1_turn = random.choice([True, False])
